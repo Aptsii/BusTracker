@@ -266,7 +266,7 @@
 
     <script>
         /* 
-        MapBox(지도), 버스 노선 정보, 버스 위치 정보 총 3개의 API를 사용했습니다.
+        MapBox(지도), 버스 정류소 정보, 버스 노선별 경유정류장, 버스 노선 정보, 버스 위치 정보 총 5개의 API를 사용했습니다.
         */
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2VvamgyajEiLCJhIjoiY21iNG95bWgxMGQ5azJpcTYwZmp6YTZzbSJ9.85nfoQRfn_yj-lBQslHTaA'; // MapBox API 액세스 토큰
         const serviceKey = "XQ%2FN7khTTUo7HqTGit9F57PV8IwHasPVh1%2FShC5C%2F1f2yBYDaJ2fGGCq4GJBfpkjzrWRmKJIDvut0kxJS73Npw%3D%3D"; // 공공데이터 포털 API 서비스키
@@ -474,8 +474,9 @@
             if (e.key === "Enter") { // 눌린 키가 Enter일 때만 실행
                 const keyword = stationSearch.value.trim(); // 입력값에서 앞뒤 공백 제거
                 clearSelBox(resultList); // 이전 검색 결과 리스트 초기화
-
+                isFirst = true; // 첫 실행 변수 초기화
                 busStops = []; // 버스 정류장 정보 초기화
+                removeBusStopLabels(); // 이전 정류장 마커 제거
                 searchStation(cityCode, keyword); // 도시 코드와 키워드로 정류장 검색 함수 호출
             }
         });
@@ -521,7 +522,7 @@
             xhr.send();
         }
 
-        function getBusRouteList(cityCode, routeId, nodeId, routeno, cb) { // 버스 정류소 이름을 가져오는 함수
+        function getBusRouteList(cityCode, routeId, nodeId, routeno, cb) { // 버스 노선 리스트를 가져오는 함수
             const url = `http://apis.data.go.kr/1613000/BusRouteInfoInqireService/getRouteAcctoThrghSttnList?serviceKey=${serviceKey}&cityCode=${cityCode}&routeId=${routeId}&numOfRows=1000&pageNo=1&_type=json`;
             const xhr = new XMLHttpRequest(); // XMLHttpRequest 객체 생성
             console.log(`버스 정류소 이름 : ${url}`);
