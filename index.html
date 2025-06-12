@@ -302,9 +302,6 @@
         let prev = null; // 위도,경도 이전 값 
         let next = null; // 위도,경도 다음 값 
 
-        let stationLat = null;
-        let stationLng = null;
-
         let busLocInterval = null; // 인터벌 중복 실행 방지
 
         let isFirst = true; // 첫 위치 설정 여부
@@ -313,7 +310,7 @@
         let busStops = {}; // 버스 정류장별 버스 정보
         let stops = []; // 현재 노선의 정류장 목록
 
-        let busCount = 0;
+        let busCount = 0; // 버스 대수
 
         const busMarker = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map); // MapBox API의 마커 생성
 
