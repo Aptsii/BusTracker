@@ -218,6 +218,44 @@
         .bus-item:hover {
             background-color: #f0f0f0;
         }
+
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            margin: 10px 0;
+            height: 30px;
+        }
+
+        .loading-spinner .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #007bff;
+            border-radius: 50%;
+            animation: bounce 1.2s infinite ease-in-out;
+        }
+
+        .loading-spinner .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loading-spinner .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+        }
     </style>
 </head>
 
@@ -255,6 +293,11 @@
                 <input type="text" id="stationSearch" placeholder="정류장 이름 입력" />
 
                 <!-- 정류장 검색 결과 -->
+                <div id="loading" class="loading-spinner" style="display: none;">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
                 <ul id="searchResults"></ul>
             </div>
         </div>
@@ -458,6 +501,7 @@
                                 completed++;
                                 console.log(completed, filteredItems.length);
                                 if (completed === filteredItems.length) {
+                                    document.getElementById("loading").style.display = "none"; // 로딩 애니메이션 종료
                                     renderBusStops(stops);
                                 }
                             });
@@ -476,6 +520,7 @@
                 clearSelBox(resultList); // 이전 검색 결과 리스트 초기화
                 isFirst = true; // 첫 실행 변수 초기화
                 busStops = []; // 버스 정류장 정보 초기화
+                document.getElementById("loading").style.display = "flex"; // 로딩 애니메이션 시작
                 removeBusStopLabels(); // 이전 정류장 마커 제거
                 searchStation(cityCode, keyword); // 도시 코드와 키워드로 정류장 검색 함수 호출
             }
